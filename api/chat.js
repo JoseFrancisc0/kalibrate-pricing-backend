@@ -21,9 +21,12 @@ export async function POST(req) {
 
     const result = streamText({
       model: groq('openai/gpt-oss-20b'),
+      // maxSteps permite que el modelo invoque la herramienta y luego formule la respuesta final
+      maxSteps: 3,
       system: `Eres el Agente Experto en Pricing de Primax (Red COESTI - Operación Directa).
 Asiste a analistas comerciales respondiendo sobre precios de combustibles, volúmenes de venta y competencia.
-Responde de forma ejecutiva, concisa y basada en datos numéricos concretos.`,
+Responde de forma ejecutiva, concisa y basada en datos numéricos concretos.
+Cuando uses una herramienta, interpreta los datos y responde directamente con el análisis comercial comparativo.`,
       messages,
       tools: {
         analizarEstacion: tool({
