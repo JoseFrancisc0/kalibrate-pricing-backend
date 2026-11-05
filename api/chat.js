@@ -20,7 +20,7 @@ export async function POST(req) {
     const { messages, contextoEstaciones } = await req.json();
 
     const result = streamText({
-      model: groq('llama-3.3-70b-versatile'),
+      model: groq('openai/gpt-oss-20b'),
       system: `Eres el Agente Experto en Pricing de Primax (Red COESTI - Operación Directa).
 Asiste a analistas comerciales respondiendo sobre precios de combustibles, volúmenes de venta y competencia.
 Responde de forma ejecutiva, concisa y basada en datos numéricos concretos.`,
@@ -42,7 +42,6 @@ Responde de forma ejecutiva, concisa y basada en datos numéricos concretos.`,
       }
     });
 
-    // getErrorMessage expone el motivo real del error en el stream
     return result.toDataStreamResponse({
       getErrorMessage: (error) => {
         if (error == null) return 'unknown error';
